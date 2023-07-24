@@ -1,12 +1,18 @@
 const express = require('express')
 var cors = require('cors')
 const app = express()
-
+app.use(cors())
 require('dotenv').config();
 
 app.use(express.json())
-app.use(cors())
+
 const connectDB = require('./connectMongo')
+
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 
 connectDB()
 
@@ -49,7 +55,7 @@ app.post('/api/task', async (req, res) => {
 })
 app.put('/api/task/:id', async (req, res) => {
     try {
-        const { name, author, price, description } = req.body
+        const { name, serialNumber, entryDate, departureDate, status, team } = req.body
         const { id } = req.params
 
         const data = await TaskModel.findByIdAndUpdate(id, {
