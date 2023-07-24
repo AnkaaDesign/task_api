@@ -10,7 +10,7 @@ const connectDB = require('./connectMongo')
 
 connectDB()
 
-const BookModel = require('./models/book.model')
+const BookModel = require('./models/Task')
 
 app.get('/', async (req, res) => {
     res.status(200).json({
@@ -24,13 +24,13 @@ app.listen(PORT, () => {
     console.log("Server is running on port " + PORT)
 })
 
-app.post('/api/v1/books', async (req, res) => {
+app.post('/api/task', async (req, res) => {
     try {
-        const { name, author, price, description } = req.body
-        const book = new BookModel({
-            name, author, price, description
+        const { name, serialNumber, entryDate, departureDate, status, team } = req.body
+        const task = new TaskModel({
+            name, serialNumber, entryDate, departureDate, status, team
         })
-        const data = await book.save()
+        const data = await task.save()
         return res.status(200).json({
             msg: 'Ok',
             data
