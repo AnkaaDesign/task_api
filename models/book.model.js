@@ -5,7 +5,7 @@ const bookSchema = new Schema({
   name: {
     type: String,
     require: true
-  }, 
+  },
   author: String,
   price: {
     type: Number,
@@ -13,7 +13,7 @@ const bookSchema = new Schema({
   },
   description: String
 }, {
-    timestamps: true
+  timestamps: true
 })
 
 module.exports = mongoose.model('Book', bookSchema)
