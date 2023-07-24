@@ -1,11 +1,11 @@
 const express = require('express')
-
+var cors = require('cors')
 const app = express()
 
 require('dotenv').config();
 
 app.use(express.json())
-
+app.use(cors())
 const connectDB = require('./connectMongo')
 
 connectDB()
