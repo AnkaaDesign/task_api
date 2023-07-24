@@ -1,9 +1,12 @@
 const express = require('express')
 var cors = require('cors')
-const app = express()
-app.use(cors())
+const bodyParser = require("body-parser");
 require('dotenv').config();
 
+const app = express()
+
+app.use(bodyParser.json());
+app.use(cors())
 app.use(express.json())
 
 const connectDB = require('./connectMongo')
