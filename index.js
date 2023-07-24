@@ -12,16 +12,22 @@ connectDB()
 
 const TaskModel = require('./models/Task')
 
-app.get('/', async (req, res) => {
-    res.status(200).json({
-        msg: "Hi"
-    })
-})
-
 const PORT = process.env.PORT
 
 app.listen(PORT, () => {
     console.log("Server is running on port " + PORT)
+})
+
+app.get('/api/task', async (req, res) => {
+    try {
+        const task = await TaskModel.find()
+        res.status(200).json(task);
+
+    } catch (error) {
+        return res.status(500).json({
+            msg: error.message
+        })
+    }
 })
 
 app.post('/api/task', async (req, res) => {
