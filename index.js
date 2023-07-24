@@ -10,7 +10,7 @@ const connectDB = require('./connectMongo')
 
 connectDB()
 
-const BookModel = require('./models/Task')
+const TaskModel = require('./models/Task')
 
 app.get('/', async (req, res) => {
     res.status(200).json({
