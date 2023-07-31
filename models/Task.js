@@ -7,7 +7,7 @@ const taskSchema = new Schema({
   entryDate: String,
   departureDate: String,
   status: Number,
-  team: Boolean
+  team: String
 })
 
 module.exports = mongoose.model('Task', taskSchema)
