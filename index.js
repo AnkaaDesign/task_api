@@ -58,11 +58,11 @@ app.post('/api/task', async (req, res) => {
 })
 app.put('/api/task/:id', async (req, res) => {
     try {
-        const { name, serialNumber, entryDate, departureDate, status, team, finishedTime } = req.body
+        const { name, serialNumber, entryDate, departureDate, status, team, finishedTime, startedTime } = req.body
         const { id } = req.params
 
         const data = await TaskModel.findByIdAndUpdate(id, {
-            name, serialNumber, entryDate, departureDate, status, team, finishedTime
+            name, serialNumber, entryDate, departureDate, status, team, finishedTime, startedTime
         }, { new: true })
 
         return res.status(200).json({
