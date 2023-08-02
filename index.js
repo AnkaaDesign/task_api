@@ -41,9 +41,9 @@ app.get('/api/task', async (req, res) => {
 
 app.post('/api/task', async (req, res) => {
     try {
-        const { name, serialNumber, entryDate, departureDate, status, team } = req.body
+        const { name, serialNumber, entryDate, departureDate, status, team, startedTime } = req.body
         const task = new TaskModel({
-            name, serialNumber, entryDate, departureDate, status, team
+            name, serialNumber, entryDate, departureDate, status, team, startedTime
         })
         const data = await task.save()
         return res.status(200).json({
