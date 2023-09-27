@@ -73,12 +73,14 @@ app.post("/api/task", async (req, res) => {
 });
 
 app.put("/api/task/start/:id", async (req, res) => {
+  const { team } = req.body;
   try {
     const { id } = req.params;
 
     await TaskModel.findByIdAndUpdate(id, {
       startedTime: new Date(),
       status: 2,
+      team,
     });
 
     return res.status(200).json({
