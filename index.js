@@ -50,6 +50,7 @@ app.post("/api/task", async (req, res) => {
       departureDate,
       status,
       team,
+      color,
       startedTime,
     } = req.body;
     const task = new TaskModel({
@@ -59,6 +60,7 @@ app.post("/api/task", async (req, res) => {
       departureDate,
       status,
       team,
+      color,
       startedTime,
     });
     await task.save();
@@ -119,6 +121,7 @@ app.put("/api/task/:id", async (req, res) => {
       entryDate,
       departureDate,
       status,
+      color,
       team,
       finishedTime,
       startedTime,
@@ -133,6 +136,7 @@ app.put("/api/task/:id", async (req, res) => {
         entryDate,
         departureDate,
         status,
+        color,
         team,
         finishedTime,
         startedTime,
