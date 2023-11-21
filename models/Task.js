@@ -5,6 +5,7 @@ const taskSchema = new Schema({
   name: String,
   serialNumber: String,
   entryDate: Date,
+  color: String,
   departureDate: Date,
   status: Number,
   team: String,
