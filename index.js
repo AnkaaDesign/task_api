@@ -1,4 +1,5 @@
 const express = require("express");
+const moment = require("moment");
 var cors = require("cors");
 const bodyParser = require("body-parser");
 require("dotenv").config();
@@ -164,5 +165,33 @@ app.delete("/api/task/:id", async (req, res) => {
     return res.status(500).json({
       result: "error",
     });
+  }
+});
+
+app.get("/api/task/:month", async (req, res) => {
+  try {
+    const { month } = req.params;
+    const lastMonth = new Date();
+    lastMonth.setMonth(month - 1);
+    lastMonth.setDate(20);
+
+    const givenMonth = new Date();
+    givenMonth.setDate(20);
+    givenMonth.setMonth(month);
+
+    console.log(lastMonth);
+    console.log(givenMonth);
+
+    const count = await TaskModel.countDocuments({
+      finishedTime: {
+        $gte: lastMonth,
+        $lt: givenMonth,
+      },
+    });
+
+    res.status(200).json({ count });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server error" });
   }
 });
