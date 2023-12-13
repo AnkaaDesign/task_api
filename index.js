@@ -168,9 +168,9 @@ app.delete("/api/task/:id", async (req, res) => {
   }
 });
 
-app.get("/api/task/:month", async (req, res) => {
+app.get("/api/task/:month/:team", async (req, res) => {
   try {
-    const { month } = req.params;
+    const { month, team } = req.params;
     const lastMonth = new Date();
     lastMonth.setMonth(month - 1);
     lastMonth.setDate(20);
@@ -179,15 +179,18 @@ app.get("/api/task/:month", async (req, res) => {
     givenMonth.setDate(20);
     givenMonth.setMonth(month);
 
-    console.log(lastMonth);
-    console.log(givenMonth);
-
-    const count = await TaskModel.countDocuments({
+    let query = {
       finishedTime: {
         $gte: lastMonth,
         $lt: givenMonth,
       },
-    });
+    };
+
+    if (team) {
+      query.team = team;
+    }
+
+    const count = await TaskModel.countDocuments(query);
 
     res.status(200).json({ count });
   } catch (error) {
