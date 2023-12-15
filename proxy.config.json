@@ -1,7 +1,0 @@
-{
-  "/api": {
-    "target": "https://tasty-cyan-jumper.cyclic.app",
-    "secure": true,
-    "changeOrigin": true
-  }
-}
