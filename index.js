@@ -16,10 +16,13 @@ const PORT = process.env.PORT;
 
 app.use(bodyParser.json());
 const corsOptions = {
-  origin: "https://ankaa-design.netlify.app",
+  origin: "https://ankaa-design.netlify.app/",
+  credentials: true, //access-control-allow-credentials:true
+  optionSuccessStatus: 200,
 };
 
-app.use(cors(corsOptions));
+app.use(cors(corsOptions)); // Use this after the variable declaration
+
 app.listen(PORT, () => {
   console.log("Server is running on port " + PORT);
 });
