@@ -16,24 +16,6 @@ const PORT = process.env.PORT;
 
 app.use(bodyParser.json());
 
-app.use(
-  cors({
-    origin: "https://ankaa-design.netlify.app/", // use your actual domain name (or localhost), using * is not recommended
-    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "HEAD", "OPTIONS"],
-    allowedHeaders: [
-      "Content-Type",
-      "Origin",
-      "X-Requested-With",
-      "Accept",
-      "x-client-key",
-      "x-client-token",
-      "x-client-secret",
-      "Authorization",
-    ],
-    credentials: true,
-  })
-);
-
 app.listen(PORT, () => {
   console.log("Server is running on port " + PORT);
 });
