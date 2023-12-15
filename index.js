@@ -16,6 +16,18 @@ const PORT = process.env.PORT;
 
 app.use(bodyParser.json());
 
+app.use(cors());
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", [
+    "http://localhost:3000",
+    "https://ankaa-design.netlify.app/",
+  ]);
+  res.header("Access-Control-Allow-Credentials", true);
+  res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Origin, Content-Type, Accept");
+  next();
+});
+
 app.listen(PORT, () => {
   console.log("Server is running on port " + PORT);
 });
