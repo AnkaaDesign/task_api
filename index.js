@@ -16,7 +16,6 @@ const PORT = process.env.PORT;
 
 app.use(bodyParser.json());
 
-const cors = require("cors");
 app.use(
   cors({
     origin: "https://ankaa-design.netlify.app/", // use your actual domain name (or localhost), using * is not recommended
