@@ -18,7 +18,7 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(
   cors({
-    origin: "*",
+    origin: "https://ankaa-design.netlify.app",
   })
 );
 app.listen(PORT, () => {
