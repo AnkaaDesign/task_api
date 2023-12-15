@@ -4,11 +4,11 @@ const { Schema } = mongoose;
 const taskSchema = new Schema({
   name: String,
   serialNumber: String,
-  entryDate: Date,
-  color: Object,
-  departureDate: Date,
-  status: Number,
   team: String,
+  color: Object,
+  status: Number,
+  departureDate: Date,
+  entryDate: Date,
   finishedTime: Date,
   startedTime: Date,
 });

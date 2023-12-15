@@ -1,25 +1,12 @@
 const express = require("express");
 const moment = require("moment");
-var cors = require("cors");
+const cors = require("cors");
 const bodyParser = require("body-parser");
 require("dotenv").config();
 
 const app = express();
 
-app.use(bodyParser.json());
-app.use(cors());
-app.use(express.json());
-
 const connectDB = require("./connectMongo");
-
-app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  next();
-});
 
 connectDB();
 
@@ -27,14 +14,17 @@ const TaskModel = require("./models/Task");
 
 const PORT = process.env.PORT;
 
+app.use(bodyParser.json());
+app.use(cors());
+
 app.listen(PORT, () => {
   console.log("Server is running on port " + PORT);
 });
 
 app.get("/api/task", async (req, res) => {
   try {
-    const task = await TaskModel.find();
-    res.status(200).json(task);
+    const tasks = await TaskModel.find();
+    res.status(200).json(tasks);
   } catch (error) {
     return res.status(500).json({
       msg: error.message,
@@ -54,6 +44,7 @@ app.post("/api/task", async (req, res) => {
       color,
       startedTime,
     } = req.body;
+
     const task = new TaskModel({
       name,
       serialNumber,
@@ -64,7 +55,9 @@ app.post("/api/task", async (req, res) => {
       color,
       startedTime,
     });
+
     await task.save();
+
     return res.status(200).json({
       result: "success",
     });
@@ -76,12 +69,12 @@ app.post("/api/task", async (req, res) => {
 });
 
 app.put("/api/task/start/:id", async (req, res) => {
-  const { team } = req.body;
   try {
     const { id } = req.params;
+    const { team } = req.body;
 
     await TaskModel.findByIdAndUpdate(id, {
-      startedTime: new Date(),
+      startedTime: startedTime,
       status: 2,
       team,
     });
@@ -101,7 +94,7 @@ app.put("/api/task/finish/:id", async (req, res) => {
     const { id } = req.params;
 
     await TaskModel.findByIdAndUpdate(id, {
-      finishedTime: new Date(),
+      finishedTime: finishedTime,
       status: 3,
     });
 
@@ -114,6 +107,7 @@ app.put("/api/task/finish/:id", async (req, res) => {
     });
   }
 });
+
 app.put("/api/task/:id", async (req, res) => {
   try {
     const {
@@ -127,9 +121,10 @@ app.put("/api/task/:id", async (req, res) => {
       finishedTime,
       startedTime,
     } = req.body;
+
     const { id } = req.params;
 
-    const data = await TaskModel.findByIdAndUpdate(
+    const updatedTask = await TaskModel.findByIdAndUpdate(
       id,
       {
         name,
@@ -171,13 +166,13 @@ app.delete("/api/task/:id", async (req, res) => {
 app.get("/api/task/:month/:team", async (req, res) => {
   try {
     const { month, team } = req.params;
-    const lastMonth = new Date();
-    lastMonth.setMonth(month - 1);
-    lastMonth.setDate(20);
 
-    const givenMonth = new Date();
-    givenMonth.setDate(20);
-    givenMonth.setMonth(month);
+    const lastMonth = moment()
+      .month(month - 2)
+      .date(20);
+    const givenMonth = moment()
+      .month(month - 1)
+      .date(20);
 
     let query = {
       finishedTime: {
