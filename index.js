@@ -18,9 +18,12 @@ app.use(bodyParser.json());
 
 app.use(cors());
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "https://ankaa-design.netlify.app");
+  res.header("Access-Control-Allow-Origin", [
+    "https://ankaa-design.netlify.app",
+    "http://localhost:3000",
+  ]);
   res.header("Access-Control-Allow-Credentials", true);
-  res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, OPTIONS");
   res.header("Access-Control-Allow-Headers", "Origin, Content-Type, Accept");
   next();
 });
