@@ -41,6 +41,7 @@ app.get("/api/task", async (req, res) => {
 });
 
 app.post("/api/task", async (req, res) => {
+  console.log(req);
   try {
     const {
       name,
