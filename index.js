@@ -17,6 +17,7 @@ const PORT = process.env.PORT;
 app.use(bodyParser.json());
 
 app.use(cors());
+
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Credentials", true);
@@ -25,9 +26,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.listen(PORT, () => {
-  console.log("Server is running on port " + PORT);
-});
+app.listen(PORT);
 
 app.get("/api/task", async (req, res) => {
   try {
@@ -41,7 +40,6 @@ app.get("/api/task", async (req, res) => {
 });
 
 app.post("/api/task", async (req, res) => {
-  console.log(req);
   try {
     const {
       name,
@@ -78,6 +76,7 @@ app.post("/api/task", async (req, res) => {
 });
 
 app.put("/api/task/start/:id", async (req, res) => {
+  const startedTime = new Date();
   try {
     const { id } = req.params;
     const { team } = req.body;
@@ -92,6 +91,7 @@ app.put("/api/task/start/:id", async (req, res) => {
       result: "success",
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       result: "error",
     });
@@ -99,6 +99,7 @@ app.put("/api/task/start/:id", async (req, res) => {
 });
 
 app.put("/api/task/finish/:id", async (req, res) => {
+  const finishedTime = new Date();
   try {
     const { id } = req.params;
 
